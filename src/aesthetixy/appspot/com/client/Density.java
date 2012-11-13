@@ -1,5 +1,8 @@
 package aesthetixy.appspot.com.client;
 
+
+
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 
 public class Density {
@@ -8,7 +11,7 @@ public class Density {
 	float density;
 	float area = 0;
 	float areaframe;
-	
+	NumberFormat fmt = NumberFormat.getFormat("##0.##");
 
 	public Density(int[][] rectXY, int frameWidth, int frameHeight) {
 			for(int i=1; i<rectXY.length; i++){
@@ -19,11 +22,11 @@ public class Density {
 				}
 				
 				areaframe = frameWidth*frameHeight;
-				
+			
 				density = area/areaframe;
 			}
 			
-			Window.alert("Frame area: "+areaframe+"\n Objects area: "+area+"\n Density: "+density);
+			Window.alert("Frame area: "+areaframe+"\nObjects area: "+area+"\nDensity: "+fmt.format(density));
 	
 	
 	}

@@ -2,13 +2,7 @@
 
 
 /** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 20px 0px 30px;
-  text-align: center;
-}
+
 
 .sendButton {
   display: block;
@@ -99,4 +93,22 @@ h1 {
 zoom: 0.5; 
 -moz-transform: scale(0.5);
  -moz-transform-origin: 0 0;
+}
+
+.panellat{
+	border: 1px solid lightgrey;
+}
+
+.object{
+	border: 0.5px solid black;
+	margin-top: 10px;
+	padding: 5px;
+	width: 100%;
+}
+
+.delete{
+}
+
+.LabelObject{
+	width: 100px;
 }
