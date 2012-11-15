@@ -1,16 +1,12 @@
 package aesthetixy.appspot.com.client;
 
 import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.canvas.dom.client.Context;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.dom.client.ImageElement;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseEvent;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
@@ -47,8 +43,8 @@ public class AesthetiXYG2 implements EntryPoint {
 	Boolean clear = false;
 	
 	//2D array saving drawn rectangles position coordinates
-	int rectXY[][] = new int[20][5];
-	String rectCOL[] = new String[20];
+	int rectXY[][] = new int[50][5];
+	String rectCOL[] = new String[50];
 	
 	public void onModuleLoad() {
 		
@@ -64,7 +60,7 @@ public class AesthetiXYG2 implements EntryPoint {
 		Command new1 = new Command(){
 			public void execute(){
 				//call a DialogBox demanding to the user a URL
-				    final MyDialogBox mDBox = new MyDialogBox("Enter URL for screenshot:");
+				    final MyDialogBox mDBox = new MyDialogBox("New Input:");
 				    mDBox.center();
 				    mDBox.show();			    				 			  	  				      
 			}
@@ -189,11 +185,21 @@ public class AesthetiXYG2 implements EntryPoint {
     	});
     	
      	
+    	if(MyDialogBox.imageLoaded)
+    	{
+    	Image img = new Image(MyDialogBox.fileUrl);
+    	rootPanel.add(img, 50,153);
+    	img.setWidth(frameWidth+"px");
+    	img.setHeight(frameHeight+"px");
+    	}
     	
+    	else
+    	{
     	//add a frame to panel with specified url
     	Frame frame = new Frame(url);
     	rootPanel.add(frame, 50, 153);
     	frame.setSize(frameWidth*2+"px", frameHeight*2+"px");
+    	}
     	
     	//add a canvas to panel on the preceding frame
     	RootPanel.get().add(myCanvas, 50, 153);
@@ -301,14 +307,14 @@ public class AesthetiXYG2 implements EntryPoint {
     	button_4.setSize("14px", "16px");
     	    	
     	//add a right-side panel to write coordinates, width and height of each drawn rectangle
-    	AbsolutePanel absolutePanel_1 = new AbsolutePanel();
+    	ScrollPanel absolutePanel_1 = new ScrollPanel();
     	rootPanel.add(absolutePanel_1, 700, 68);
     	absolutePanel_1.setStyleName("panellat");
     	absolutePanel_1.setSize("164px", "565px");
     	
     	//add a VerticalPanel in this right-side panel 
     	final VerticalPanel verticalPanel = new VerticalPanel();
-    	absolutePanel_1.add(verticalPanel, 10, 10);
+    	absolutePanel_1.add(verticalPanel);
     	verticalPanel.setSize("144px", "20px");
     	
     	//add title "Saved datas" to the right-side panel
@@ -371,14 +377,17 @@ public class AesthetiXYG2 implements EntryPoint {
     	    	verticalPanel3.setStyleName("LabelObject");
     	    			
     			Label lblRectangle = new Label("Rectangle"+i);
+    			lblRectangle.setStyleName("Label");
     	    	verticalPanel3.add(lblRectangle);
     	    	
     	    	
     	    	Label lblxy = new Label("("+rectXY[i][0]+":"+rectXY[i][1]+")");
+    	    	lblxy.setStyleName("Label");
     	    	verticalPanel3.add(lblxy);
     	    	
     	    	
     	    	Label lblwh = new Label("w: "+rectXY[i][2]+" h: "+rectXY[i][3]);
+    	    	lblwh.setStyleName("Label");
     	    	verticalPanel3.add(lblwh);
     	    	
     	    
