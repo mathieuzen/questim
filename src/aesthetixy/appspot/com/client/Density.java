@@ -2,33 +2,41 @@ package aesthetixy.appspot.com.client;
 
 
 
+import java.util.ArrayList;
+
 import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Window;
+
 
 public class Density {
 
-	String texte ="";
-	float density;
-	float area = 0;
-	float areaframe;
+	static String texte ="";
+	static float density;
+	static float area = 0;
+	static float areaframe;
 	NumberFormat fmt = NumberFormat.getFormat("##0.##");
 
-	public Density(int[][] rectXY, int frameWidth, int frameHeight) {
-			for(int i=1; i<rectXY.length; i++){
-				if(rectXY[i][0]!=0 || rectXY[i][1]!=0)
+	public static float getDensity(ArrayList rectXY, int frameWidth, int frameHeight) {
+		density=0;
+		areaframe=0;
+		area=0;
+			for(int i=1; i<rectXY.size(); i++){
+				Region r = (Region) rectXY.get(i);
+				if(r.getX()!=0 || r.getY()!=0)
 				{
-					texte += ("Rectangle "+i+" "+rectXY[i][2]+"x"+rectXY[i][3]+" in "+rectXY[i][0]+" "+rectXY[i][1]+"\n");
-					area += rectXY[i][2]*rectXY[i][3];
+					area += r.getWidth()*r.getHeight();
 				}
 				
 				areaframe = frameWidth*frameHeight;
 			
 				density = area/areaframe;
+			
 			}
 			
-			Window.alert("Frame area: "+areaframe+"\nObjects area: "+area+"\nDensity: "+fmt.format(density));
-	
+			//Window.alert("Frame area: "+areaframe+"\nObjects area: "+area+"\nDensity: "+fmt.format(density));
+			return density;
 	
 	}
+
+
 
 }

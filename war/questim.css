@@ -1,0 +1,24 @@
+
+h1 {
+    color: brown;
+    margin: auto;
+    width: 175px;
+}
+h2 {
+    color: black;
+    margin: auto;
+    width: 500px;
+}
+.titre {
+    margin: 15% auto auto;
+    width: 600px;
+}
+.lien {
+    margin: auto;
+    width: 56px;
+    margin-top: 20px;
+}
+a {
+    margin: auto;
+    width: 200px;
+}

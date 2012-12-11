@@ -8,6 +8,7 @@ import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -21,7 +22,7 @@ public class MyDialogBox extends DialogBox {
 	private TextBox textBox = new TextBox();
     private Button okButton = new Button("Ok");
     private FlowPanel panelImages = new FlowPanel();
-    public String url;
+    public static String url;
     static boolean imageLoaded = false;
     static String fileUrl;
 
@@ -37,12 +38,18 @@ public class MyDialogBox extends DialogBox {
                 hide();
                 //url receive the url entered by user
                 url = textBox.getText();
-                //change url variable in main class (API url -> size max= 200 :( )
-                AesthetiXYG2.url=url;
+                //change url variable in main class
+               	Main.setUrl(url);
                 if(url.length()!=0){
                 	imageLoaded = false;
-                }  
-          }
+                	Window.Location.replace("/AesthetiXYG2.html?url="+url);
+                }
+                
+                else
+                {
+                	Window.Location.replace("/AesthetiXYG2.html?fileUrl="+fileUrl+"&imageLoaded=true");
+                }
+             }
         });
        
 
@@ -93,5 +100,8 @@ public class MyDialogBox extends DialogBox {
           panelImages.add(image);
         }
       };
-
+      
+      public static String getUrl(){
+    	  return url;
+      }
 }
