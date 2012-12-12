@@ -67,85 +67,17 @@ public class Main implements EntryPoint {
 		RootPanel.get().clear();
 		Window.setMargin("0px");
 		
-		//Command relative to File/New item
-		Command new1 = new Command(){
-			public void execute(){
-				//call a DialogBox demanding to the user a URL
-				    final MyDialogBox mDBox = new MyDialogBox("New Input:");
-				    mDBox.center();
-				    mDBox.show();			    				 			  	  				      
-			}
-		};
-		
-		//Command relative to File/Refresh item
-		Command refresh = new Command(){
-			public void execute(){
-				onModuleLoad();
-			}
-		};
-		
-		//Command relative to Metric/Balance item
-		Command balance = new Command(){
-			public void execute(){
-				//new Balance(rectXY, frameWidth, frameHeight);
-			}
-		};
-		
-		//Command relative to Metric/Alignment item
-		Command alignment = new Command(){
-			public void execute(){
-				Window.alert("Alignment");
-			}
-		};
-
-		//Command relative to Metric/Density item
-		Command density = new Command(){
-			public void execute(){
-				//new Density(rectXY, frameWidth, frameHeight);
-			}
-		};
-		
-
-		
 		//RootPanel AttachHandler (unknown purpose for now)
     	RootPanel rootPanel = RootPanel.get();
     	rootPanel.setStyleName("rootPanel");
-    	rootPanel.setSize("800px", "740px");
+    	rootPanel.setSize("900px", "650px");
     	rootPanel.addAttachHandler(new Handler() {
     		public void onAttachOrDetach(AttachEvent event) {
     		}
     	});
     	
-    	//MenuBar created and added to RootPanel
-    	MenuBar menuBar = new MenuBar(false);
-    	rootPanel.add(menuBar, 0, 0);
-    	menuBar.setSize("968px", "32px");
-    	MenuBar menuBar_1 = new MenuBar(true);
     	
-    	//Item "File" in MenuBar
-    	MenuItem mntmFile = new MenuItem("File", false, menuBar_1);
-    	//Item "File/New" in MenuBar
-    	MenuItem mntmNew = new MenuItem("New", false, (Command) new1);
-    	menuBar_1.addItem(mntmNew);
-    	//Item "File/Detection" in MenuBar
-    	MenuItem mntmDetection = new MenuItem("Refresh", false, (Command) refresh);
-    	menuBar_1.addItem(mntmDetection);
-    	menuBar.addItem(mntmFile);
-    	MenuBar menuBar_2 = new MenuBar(true);
     	
-    	//Item "Metrics" in MenuBar
-    	MenuItem mntmMetrics = new MenuItem("Metrics", false, menuBar_2);
-    	//Item "Metrics/Balance" in MenuBar
-    	MenuItem mntmBalance = new MenuItem("Balance", false, (Command) balance);
-    	menuBar_2.addItem(mntmBalance);
-    	//Item "Metrics/Density" in MenuBar
-    	MenuItem mntmDensity = new MenuItem("Density", false, (Command) density);
-    	menuBar_2.addItem(mntmDensity);
-    	//Item "Metrics/Alignment" in MenuBar
-    	MenuItem mntmAlignment = new MenuItem("Alignment", false, (Command) alignment);
-    	menuBar_2.addItem(mntmAlignment);
-    	menuBar.addItem(mntmMetrics);
-    	 
     	//Canvas and Context creation
     	final Canvas myCanvas = Canvas.createIfSupported();
     	myCanvas.setStyleName("canvas");
@@ -199,7 +131,7 @@ public class Main implements EntryPoint {
      	if(Window.Location.getParameter("imageLoaded").equals("true"))
 		{
 			Image img = new Image(Window.Location.getParameter("fileUrl"));
-			rootPanel.add(img, 50,153);
+			rootPanel.add(img, 50,135);
 			img.setWidth(frameWidth+"px");
 			img.setHeight(frameHeight+"px");
 		}
@@ -208,22 +140,22 @@ public class Main implements EntryPoint {
 		{
 			//add a frame to panel with specified url
 			Frame frame = new Frame(url);
-			rootPanel.add(frame, 50, 153);
+			rootPanel.add(frame, 50, 135);
 			frame.setSize(frameWidth*2+"px", frameHeight*2+"px");
 		}
     	
     	//add a canvas to panel on the preceding frame
-    	RootPanel.get().add(myCanvas, 50, 153);
+    	RootPanel.get().add(myCanvas, 50, 135);
     	myCanvas.setSize(frameWidth+"px", frameHeight+"px");
     	
     	//add label x,y to the panel for mouse position
-    	rootPanel.add(lblx, 355, 650); 
-    	rootPanel.add(lbly, 395, 650);
+    	rootPanel.add(lblx, 355, 632); 
+    	rootPanel.add(lbly, 395, 632);
     	
     	//add a panel above canvas (a sort of "toolpanel")
     	AbsolutePanel absolutePanel = new AbsolutePanel();
     	absolutePanel.setStyleName("gwt-horizontalPanel");
-    	rootPanel.add(absolutePanel, 50, 68);
+    	rootPanel.add(absolutePanel, 50, 50);
     	absolutePanel.setSize("640px", "75px");
     	
     	Image step1 = new Image("step1.png");
@@ -348,7 +280,7 @@ public class Main implements EntryPoint {
     	    	
     	//add a right-side panel to write coordinates, width and height of each drawn rectangle
     	ScrollPanel absolutePanel_1 = new ScrollPanel();
-    	rootPanel.add(absolutePanel_1, 700, 68);
+    	rootPanel.add(absolutePanel_1, 700, 50);
     	absolutePanel_1.setStyleName("panellat");
     	absolutePanel_1.setSize("164px", "565px");
     	

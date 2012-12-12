@@ -21,6 +21,8 @@ public class Index implements EntryPoint{
 
 	FlowPanel input = new FlowPanel();
 	
+	Label title = new Label("QUESTIM");
+	Label title2 = new Label ("Quality Estimator Tool using Metrics");
 	final TextBox textBox = new TextBox();
     Button okButton = new Button("Continue");
     final FlowPanel panelImages = new FlowPanel();
@@ -30,9 +32,13 @@ public class Index implements EntryPoint{
     
 	public void onModuleLoad() {
 		
+		
 		okButton.setStyleName("okButton");
 		textBox.setStyleName("textBox");
-				
+		title.setStyleName("h1");
+		title2.setStyleName("h2");
+		panelImages.setStyleName("image");
+		
 	    okButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -54,22 +60,33 @@ public class Index implements EntryPoint{
              }
         });
 	    
+	    VerticalPanel titlePanel = new VerticalPanel();
+	    titlePanel.setStyleName("titlePanel");
+	    titlePanel.add(title);
+	    titlePanel.add(title2);
+	    
 	    VerticalPanel vPanel = new VerticalPanel();
         Label labelurl = new Label("Enter URL:");
+        labelurl.setStyleName("labelurl");
         vPanel.add(labelurl);
         vPanel.add(textBox);
         Label labelor = new Label("or");
+        labelor.setStyleName("labelor");
         vPanel.add(labelor);
         Label labelsc = new Label("Upload a screenshot:");
+        labelsc.setStyleName("labelsc");
         vPanel.add(labelsc);
         MultiUploader defaultUploader = new MultiUploader();
+        defaultUploader.setStyleName("defaultUploader");
         vPanel.add(defaultUploader);
         defaultUploader.addOnFinishUploadHandler(onFinishUploaderHandler);
         vPanel.add(panelImages);
         vPanel.add(okButton); 
         
+        
         input.add(vPanel);
         input.setStyleName("input");
+        RootPanel.get().add(titlePanel);
         RootPanel.get().add(input);
         
 	}
@@ -90,7 +107,7 @@ public class Index implements EntryPoint{
           // Attach an image to the pictures viewer
           OnLoadPreloadedImageHandler showImage = new OnLoadPreloadedImageHandler() {
             public void onLoad(PreloadedImage image) {
-              image.setWidth("300px");
+              image.setWidth("250px");
               panelImages.add(image);
             }
           };
