@@ -22,3 +22,21 @@ a {
     margin: auto;
     width: 200px;
 }
+
+.input{
+	width: 600px;
+	margin: auto;
+	width: 32%;
+}
+
+
+.textBox{
+	width: 100%;
+}
+
+.okButton{
+	width: 30%;
+	height: 30px;
+	margin-top: 20px;
+	margin-left: 35%;
+}

@@ -6,6 +6,10 @@ public class Balance {
 	
 	String texte ="";
 
+	public Balance(int[][] rectXY, int frameWidth, int frameHeight) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public static float getBalance(int[][] rectXY, int frameWidth, int frameHeight) {
 		
 		float BM,BMvert,BMhori;	

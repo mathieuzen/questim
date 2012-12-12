@@ -15,6 +15,10 @@ public class Density {
 	static float areaframe;
 	NumberFormat fmt = NumberFormat.getFormat("##0.##");
 
+	public Density(int[][] rectXY, int frameWidth, int frameHeight) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public static float getDensity(ArrayList rectXY, int frameWidth, int frameHeight) {
 		density=0;
 		areaframe=0;
