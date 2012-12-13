@@ -37,8 +37,8 @@ public class Main implements EntryPoint {
 	Label lbly = new Label("000");
 	
 	//frame size
-	int frameWidth = 640;
-	int frameHeight = 480;
+	int frameWidth = (int) (Window.getClientWidth()/1.5);
+	int frameHeight = (int) (Window.getClientHeight()/1.5);
 	
 	int x = 0;
 	int y = 0;
@@ -58,6 +58,7 @@ public class Main implements EntryPoint {
 			Window.alert("This is no valid URL!");
 			Window.Location.replace("/questim.html");
 		}*/
+	
 		
 		for(int i=0;i<rectCOL.length;i++)
 			rectCOL[i]=null;
@@ -67,10 +68,10 @@ public class Main implements EntryPoint {
 		RootPanel.get().clear();
 		Window.setMargin("0px");
 		
-		//RootPanel AttachHandler (unknown purpose for now)
+		//RootPanel AttachHandler (unknown purpse for now)
     	RootPanel rootPanel = RootPanel.get();
     	rootPanel.setStyleName("rootPanel");
-    	rootPanel.setSize("900px", "650px");
+    	//rootPanel.setSize("900px", "650px");
     	rootPanel.addAttachHandler(new Handler() {
     		public void onAttachOrDetach(AttachEvent event) {
     		}
@@ -81,15 +82,15 @@ public class Main implements EntryPoint {
     	//Canvas and Context creation
     	final Canvas myCanvas = Canvas.createIfSupported();
     	myCanvas.setStyleName("canvas");
-    	myCanvas.setCoordinateSpaceWidth(640);
-    	myCanvas.setCoordinateSpaceHeight(480);
+    	myCanvas.setCoordinateSpaceWidth(frameWidth);
+    	myCanvas.setCoordinateSpaceHeight(frameHeight);
     	final Context2d context = myCanvas.getContext2d();	     
     	
     	//Write coordinates of mouse position in labels and draw a rectangle
     	myCanvas.addMouseMoveHandler(new MouseMoveHandler(){
     		public void onMouseMove(MouseMoveEvent event){
     				
-    				context.clearRect(0, 0, 640, 480);
+    				context.clearRect(0, 0, frameWidth, frameHeight);
 
         			for(int j=0;j<rectXY.size();j++)
     				{
@@ -131,32 +132,38 @@ public class Main implements EntryPoint {
      	if(Window.Location.getParameter("imageLoaded").equals("true"))
 		{
 			Image img = new Image(Window.Location.getParameter("fileUrl"));
-			rootPanel.add(img, 50,135);
+			//rootPanel.add(img, 50,135);
 			img.setWidth(frameWidth+"px");
 			img.setHeight(frameHeight+"px");
+			rootPanel.add(img, Window.getClientWidth()/4-img.getOffsetWidth()/2, 50);
+
 		}
 	
 		else
 		{
 			//add a frame to panel with specified url
 			Frame frame = new Frame(url);
-			rootPanel.add(frame, 50, 135);
-			frame.setSize(frameWidth*2+"px", frameHeight*2+"px");
+			//rootPanel.add(frame, 50, 135);
+			frame.setSize(frameWidth*1.5+"px", frameHeight*1.5+"px");
+			rootPanel.add(frame, Window.getClientWidth()/2-frameWidth/2, 50);
 		}
     	
     	//add a canvas to panel on the preceding frame
-    	RootPanel.get().add(myCanvas, 50, 135);
-    	myCanvas.setSize(frameWidth+"px", frameHeight+"px");
+    	//RootPanel.get().add(myCanvas, 50, 135);
+     	myCanvas.setSize(frameWidth+"px", frameHeight+"px");
+     	RootPanel.get().add(myCanvas, Window.getClientWidth()/2-frameWidth/2, 50);
     	
     	//add label x,y to the panel for mouse position
-    	rootPanel.add(lblx, 355, 632); 
-    	rootPanel.add(lbly, 395, 632);
+    	//rootPanel.add(lblx, 355, 632); 
+    	//rootPanel.add(lbly, 395, 632);
+    	rootPanel.add(lblx, Window.getClientWidth()/2-20, frameHeight+70); 
+    	rootPanel.add(lbly, Window.getClientWidth()/2+20, frameHeight+70);
     	
     	//add a panel above canvas (a sort of "toolpanel")
     	AbsolutePanel absolutePanel = new AbsolutePanel();
     	absolutePanel.setStyleName("gwt-horizontalPanel");
     	rootPanel.add(absolutePanel, 50, 50);
-    	absolutePanel.setSize("640px", "75px");
+    	absolutePanel.setSize("130px", frameHeight+"px");
     	
     	Image step1 = new Image("step1.png");
     	step1.setSize("60px","50px");
@@ -170,10 +177,8 @@ public class Main implements EntryPoint {
     	metricReport.setSize("38px","43px");
     	//Label firststeptext = new Label("Pick up a color.");
     	//firststeptext.setStyleName("steptext");
-    	absolutePanel.add(step1,20,15);
-    	absolutePanel.add(step2,180,15);
-    	absolutePanel.add(step3,340,15);
-    	absolutePanel.add(drawRect,250,15);
+    	
+    	absolutePanel.add(drawRect,15,90);
     	
     	//add a button for metric report
     	PushButton btnMetricReport = new PushButton(metricReport);
@@ -182,15 +187,15 @@ public class Main implements EntryPoint {
     			new MetricsReport(rectXY, frameWidth, frameHeight);
        		}
     	});
-    	absolutePanel.add(btnMetricReport, 410, 15);
+    	absolutePanel.add(btnMetricReport, 15, 165);
     	btnMetricReport.setSize("40px", "45px");
  
     	//absolutePanel.add(firststeptext, 20, 15);
     	    	
     	//add a grid with 6 color buttons from white to black (4 shades of grey)
     	Grid grid = new Grid(2, 3);
-    	absolutePanel.add(grid, 90, 15);
-    	grid.setSize("62px", "43px");
+    	absolutePanel.add(grid, 15, 15);
+    	grid.setSize("43px", "63px");
     	
     	//white button
     	Button btnColor = new Button("");
@@ -280,14 +285,14 @@ public class Main implements EntryPoint {
     	    	
     	//add a right-side panel to write coordinates, width and height of each drawn rectangle
     	ScrollPanel absolutePanel_1 = new ScrollPanel();
-    	rootPanel.add(absolutePanel_1, 700, 50);
+    	rootPanel.add(absolutePanel_1, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 50);
     	absolutePanel_1.setStyleName("panellat");
-    	absolutePanel_1.setSize("164px", "565px");
+    	absolutePanel_1.setSize("130px", frameHeight+"px");
     	
     	//add a VerticalPanel in this right-side panel 
     	final VerticalPanel verticalPanel = new VerticalPanel();
     	absolutePanel_1.add(verticalPanel);
-    	verticalPanel.setSize("144px", "20px");
+    	verticalPanel.setSize("140px", "20px");
     	
     	//add title "Saved datas" to the right-side panel
     	final Label lblNewLabel = new Label("Objects");
@@ -311,8 +316,8 @@ public class Main implements EntryPoint {
 				}
     		}
     	});
-    	absolutePanel.add(btnNewButton, 530, 15);
-    	btnNewButton.setSize("89px", "50px");
+    	absolutePanel.add(btnNewButton, 15, 240);
+    	btnNewButton.setSize("50px", "89px");
     	
     	//Change Boolean mouseDown to false if mouse left click is up
     	myCanvas.addMouseUpHandler(new MouseUpHandler(){
