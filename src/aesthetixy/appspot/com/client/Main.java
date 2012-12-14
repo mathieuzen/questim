@@ -196,8 +196,11 @@ public class Main implements EntryPoint {
     		}
     	});
     	
-    	absolutePanel.add(zoomin,15,90);
-    	absolutePanel.add(zoomout,15,120);
+    	zoomin.setSize("60px", "50px");
+    	zoomout.setSize("60px", "50px");
+    	
+    	absolutePanel.add(zoomin,absolutePanel.getOffsetWidth()/2-60/2,90);
+    	absolutePanel.add(zoomout,absolutePanel.getOffsetWidth()/2-60/2,160);
     	
     	//add a button for metric report
     	PushButton btnMetricReport = new PushButton(metricReport);
@@ -206,15 +209,16 @@ public class Main implements EntryPoint {
     			new MetricsReport(rectXY, frameWidth, frameHeight);
        		}
     	});
-    	absolutePanel.add(btnMetricReport, 15, 165);
     	btnMetricReport.setSize("40px", "45px");
+    	absolutePanel.add(btnMetricReport, 40, 230);
+    	
  
     	//absolutePanel.add(firststeptext, 20, 15);
     	    	
     	//add a grid with 6 color buttons from white to black (4 shades of grey)
     	Grid grid = new Grid(2, 3);
-    	absolutePanel.add(grid, 15, 15);
     	grid.setSize("43px", "63px");
+    	absolutePanel.add(grid, 40, 15);
     	
     	//white button
     	Button btnColor = new Button("");
@@ -235,6 +239,7 @@ public class Main implements EntryPoint {
     	Button button = new Button("");
     	button.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
+    			
 				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
     			context.setFillStyle("#EAEAEA");
     			rectCOL[0] ="#EAEAEA";
@@ -311,7 +316,7 @@ public class Main implements EntryPoint {
     	//add a VerticalPanel in this right-side panel 
     	final VerticalPanel verticalPanel = new VerticalPanel();
     	absolutePanel_1.add(verticalPanel);
-    	verticalPanel.setSize("140px", "20px");
+    	verticalPanel.setSize("130px", "20px");
     	
     	//add title "Saved datas" to the right-side panel
     	final Label lblNewLabel = new Label("Objects");
@@ -335,8 +340,10 @@ public class Main implements EntryPoint {
 				}
     		}
     	});
-    	absolutePanel.add(btnNewButton, 15, 240);
-    	btnNewButton.setSize("50px", "89px");
+    	btnNewButton.setSize("60px", "70px");
+    	absolutePanel.add(btnNewButton, absolutePanel.getOffsetWidth()/2-60/2, 305);
+
+    	
     	
     	//Change Boolean mouseDown to false if mouse left click is up
     	myCanvas.addMouseUpHandler(new MouseUpHandler(){
@@ -432,6 +439,10 @@ public class Main implements EntryPoint {
 		//RootPanel.get().insert(frame, 0, Window.getClientWidth()/2-frameWidth/2, 50);
 		RootPanel.get().add(frame, Window.getClientWidth()/2-frameWidth/2, 50);
 		frame.getElement().getStyle().setProperty("transform", "scale("+1/zoom+")");
+		frame.getElement().getStyle().setProperty("-moz-transform", "scale("+1/zoom+")");
+		frame.getElement().getStyle().setProperty("-ms-transform", "scale("+1/zoom+")");
+		frame.getElement().getStyle().setProperty("-webkit-transform", "scale("+1/zoom+")");
+		frame.getElement().getStyle().setProperty("-o-transform", "scale("+1/zoom+")");
 	}
  	public void drawCanvas(){
 	//add a canvas to panel on the preceding frame
