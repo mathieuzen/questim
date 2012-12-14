@@ -31,19 +31,26 @@ public class Main implements EntryPoint {
 	//URL of the void picture to draw when no screenshot loaded
 	static String url = Window.Location.getParameter("url");
 	
+	Frame frame = new Frame(url);
+	
 	
 	//Labels that displays mouse position on the canvas
 	Label lblx = new Label("000");
 	Label lbly = new Label("000");
 	
 	//frame size
-	int frameWidth = (int) (Window.getClientWidth()/1.5);
-	int frameHeight = (int) (Window.getClientHeight()/1.5);
+	static int frameWidth = (int) (Window.getClientWidth()/1.5);
+	static int frameHeight = (int) (Window.getClientHeight()/1.5);
 	
 	int x = 0;
 	int y = 0;
 	int width;
 	int height;
+
+	final Canvas myCanvas = Canvas.createIfSupported();
+	
+	static double zoom = 1.5;
+	
 	Region newone;
 	
 	Boolean clear = false;
@@ -69,7 +76,7 @@ public class Main implements EntryPoint {
 		Window.setMargin("0px");
 		
 		//RootPanel AttachHandler (unknown purpse for now)
-    	RootPanel rootPanel = RootPanel.get();
+    	final RootPanel rootPanel = RootPanel.get();
     	rootPanel.setStyleName("rootPanel");
     	//rootPanel.setSize("900px", "650px");
     	rootPanel.addAttachHandler(new Handler() {
@@ -80,7 +87,6 @@ public class Main implements EntryPoint {
     	
     	
     	//Canvas and Context creation
-    	final Canvas myCanvas = Canvas.createIfSupported();
     	myCanvas.setStyleName("canvas");
     	myCanvas.setCoordinateSpaceWidth(frameWidth);
     	myCanvas.setCoordinateSpaceHeight(frameHeight);
@@ -141,17 +147,11 @@ public class Main implements EntryPoint {
 	
 		else
 		{
-			//add a frame to panel with specified url
-			Frame frame = new Frame(url);
-			//rootPanel.add(frame, 50, 135);
-			frame.setSize(frameWidth*1.5+"px", frameHeight*1.5+"px");
-			rootPanel.add(frame, Window.getClientWidth()/2-frameWidth/2, 50);
+			drawFrame(zoom);
+	
 		}
     	
-    	//add a canvas to panel on the preceding frame
-    	//RootPanel.get().add(myCanvas, 50, 135);
-     	myCanvas.setSize(frameWidth+"px", frameHeight+"px");
-     	RootPanel.get().add(myCanvas, Window.getClientWidth()/2-frameWidth/2, 50);
+     	drawCanvas();
     	
     	//add label x,y to the panel for mouse position
     	//rootPanel.add(lblx, 355, 632); 
@@ -164,21 +164,40 @@ public class Main implements EntryPoint {
     	absolutePanel.setStyleName("gwt-horizontalPanel");
     	rootPanel.add(absolutePanel, 50, 50);
     	absolutePanel.setSize("130px", frameHeight+"px");
-    	
-    	Image step1 = new Image("step1.png");
-    	step1.setSize("60px","50px");
-    	Image step2 = new Image("step2.png");
-    	step2.setSize("60px","50px");
-    	Image step3 = new Image("step3.png");
-    	step3.setSize("60px","50px");
-    	Image drawRect = new Image("mousedrawrectangles.png");
-    	drawRect.setSize("65px","60px");
     	Image metricReport = new Image("file2.png");
     	metricReport.setSize("38px","43px");
     	//Label firststeptext = new Label("Pick up a color.");
     	//firststeptext.setStyleName("steptext");
     	
-    	absolutePanel.add(drawRect,15,90);
+    	Button zoomout = new Button("Zoom out");
+    	zoomout.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			if(zoom<2)
+    			{
+    			zoom+=0.1;
+    			rootPanel.remove(frame);
+    			rootPanel.remove(myCanvas);
+    			drawFrame(zoom);
+    			drawCanvas();
+    			}
+    		}
+    	});
+    	
+    	Button zoomin = new Button("Zoom in");
+    	zoomin.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			if(zoom>0.5)
+    			{
+    			zoom-=0.1;
+    			rootPanel.remove(frame);
+    			drawFrame(zoom);
+    			drawCanvas();
+    			}
+    		}
+    	});
+    	
+    	absolutePanel.add(zoomin,15,90);
+    	absolutePanel.add(zoomout,15,120);
     	
     	//add a button for metric report
     	PushButton btnMetricReport = new PushButton(metricReport);
@@ -403,4 +422,21 @@ public class Main implements EntryPoint {
 	public static void setUrl(String str){
 		url = str;
 	}
+	
+	public void drawFrame(double zoom){
+		//add a frame to panel with specified url
+		frame.setUrl(url);
+		//rootPanel.add(frame, 50, 135);
+		frame.setSize(frameWidth*zoom+"px", frameHeight*zoom+"px");
+		//RootPanel.get().remove(0);
+		//RootPanel.get().insert(frame, 0, Window.getClientWidth()/2-frameWidth/2, 50);
+		RootPanel.get().add(frame, Window.getClientWidth()/2-frameWidth/2, 50);
+		frame.getElement().getStyle().setProperty("transform", "scale("+1/zoom+")");
+	}
+ 	public void drawCanvas(){
+	//add a canvas to panel on the preceding frame
+	//RootPanel.get().add(myCanvas, 50, 135);
+ 	myCanvas.setSize(frameWidth+"px", frameHeight+"px");
+ 	RootPanel.get().add(myCanvas, Window.getClientWidth()/2-frameWidth/2, 50);
+ 	}
 }
