@@ -25,6 +25,8 @@ public class Main implements EntryPoint {
 	 *Some variables declarations 
 	 */
 	
+	Boolean browse = false;
+	
 	//Boolean to know if mouse left click is down
 	Boolean mouseDown = false;
 	
@@ -224,6 +226,7 @@ public class Main implements EntryPoint {
     	Button btnColor = new Button("");
     	btnColor.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
+    			
 				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
     			context.setFillStyle("#FEFDFD");
     			rectCOL[0] ="#FEFDFD";
@@ -239,7 +242,7 @@ public class Main implements EntryPoint {
     	Button button = new Button("");
     	button.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			
+    			rootPanel.getBodyElement().getStyle().setProperty("cursor","url(cursorgrey.ico),auto");
 				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
     			context.setFillStyle("#EAEAEA");
     			rectCOL[0] ="#EAEAEA";
@@ -342,8 +345,24 @@ public class Main implements EntryPoint {
     	});
     	btnNewButton.setSize("60px", "70px");
     	absolutePanel.add(btnNewButton, absolutePanel.getOffsetWidth()/2-60/2, 305);
-
     	
+    
+    	final Button btnBrowse = new Button ("Browse");
+    	btnBrowse.addClickHandler(new ClickHandler(){
+    		public void onClick(ClickEvent event){
+    			browse = !browse;
+    			if(browse == true){
+    				myCanvas.setVisible(false);
+    				btnBrowse.setText("Draw");
+    			}
+    			if(browse == false){
+    				myCanvas.setVisible(true);
+    				btnBrowse.setText("Browse");
+    			}
+    		}
+    	});
+    	btnBrowse.setSize("60px", "35px");
+    	absolutePanel.add(btnBrowse, absolutePanel.getOffsetWidth()/2-60/2, 385);
     	
     	//Change Boolean mouseDown to false if mouse left click is up
     	myCanvas.addMouseUpHandler(new MouseUpHandler(){
