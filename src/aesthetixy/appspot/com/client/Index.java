@@ -12,12 +12,15 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Index implements EntryPoint{
+
 
 	FlowPanel input = new FlowPanel();
 	
@@ -81,7 +84,8 @@ public class Index implements EntryPoint{
         vPanel.add(defaultUploader);
         defaultUploader.addOnFinishUploadHandler(onFinishUploaderHandler);
         vPanel.add(panelImages);
-        vPanel.add(okButton); 
+        vPanel.add(okButton);
+        vPanel.setCellHorizontalAlignment(okButton,HasHorizontalAlignment.ALIGN_CENTER);
         
         
         input.add(vPanel);

@@ -4,13 +4,15 @@
     font-size: 35px;
     font-weight: bold;
     margin: auto;
-    width: 29%;
+    text-align: center;
+    width: 100%;
 }
 .h2 {
     color: black;
     font-size: 25px;
     margin: 10px auto 40px;
-    width: 75%;
+    text-align: center;
+    width: 100%;
 }
 .titre {
     margin: 15% auto auto;
@@ -26,7 +28,8 @@ a {
 }
 .input {
     margin: auto;
-    width: 34%;
+    text-align: center;
+    width: 340px;
 }
 .titlePanel {
     margin: 10% auto auto;
@@ -39,16 +42,12 @@ a {
 }
 .okButton {
     height: 30px;
-    margin-left: 35%;
-    margin-top: 20px;
-    width: 30%;
+    margin: 20px auto auto;
+    width: 130px;
 }
 .labelurl {
     margin-bottom: 5px;
-}
-body {
-    max-height: 100%;
-    min-height: 100%;
+    width: 100%;
 }
 .labelor {
     color: brown;
@@ -59,10 +58,18 @@ body {
     text-decoration: underline;
 }
 .image {
+    margin: 10px auto auto;
     width: 250px;
-    margin: auto;
-    margin-top: 10px;
 }
 .labelsc {
     margin-bottom: 5px;
+}
+.table {
+    width: 100%;
+}
+.gwt-FileUpload {
+    width: 100%;
+}
+.GWTUpld {
+    width: 100%;
 }

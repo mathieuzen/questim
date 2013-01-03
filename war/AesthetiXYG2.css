@@ -83,6 +83,49 @@
     border: 0.5px solid black;
     margin-top: 10px;
 }
+
+.objectBlack3 {
+	color: white;
+	background-color: #000000;
+    border: 0.5px solid black;
+    margin-top: 10px;
+}
+
+.objectBlack2 {
+	color: white;
+	background-color: #494949;
+    border: 0.5px solid black;
+    margin-top: 10px;
+}
+
+.objectBlack1 {
+	color: white;
+	background-color: #848484;
+    border: 0.5px solid black;
+    margin-top: 10px;
+}
+
+.objectWhite1 {
+	color: black;
+	background-color: #CBCACA;
+    border: 0.5px solid black;
+    margin-top: 10px;
+}
+
+.objectWhite2 {
+	color: black;
+	background-color: #EAEAEA;
+    border: 0.5px solid black;
+    margin-top: 10px;
+}
+
+.objectWhite3 {
+	color: black;
+	background-color: #FEFDFD;
+    border: 0.5px solid black;
+    margin-top: 10px;
+}
+
 .delete {
 }
 .LabelObject {

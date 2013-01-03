@@ -59,7 +59,8 @@ public class Main implements EntryPoint {
 	
 	//2D array saving drawn rectangles position coordinates
 	ArrayList rectXY = new ArrayList();
-	String rectCOL[] = new String[50];
+	String color = "#848484";
+	String styleName ="";
 	
 	public void onModuleLoad() {
 
@@ -68,9 +69,6 @@ public class Main implements EntryPoint {
 			Window.Location.replace("/questim.html");
 		}*/
 	
-		
-		for(int i=0;i<rectCOL.length;i++)
-			rectCOL[i]=null;
 		
 		
 		//Clear the panel on module load (for refresh function)
@@ -105,9 +103,9 @@ public class Main implements EntryPoint {
     					Region r;
     					r = (Region) rectXY.get(j);
     					context.strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
-    					context.setFillStyle("#848484");
+    					context.setFillStyle(r.color);
     					context.fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
-    					context.setGlobalAlpha(0.5);
+    					context.setGlobalAlpha(0.7);
     				}
     				
     				
@@ -122,7 +120,7 @@ public class Main implements EntryPoint {
         			if(mouseDown == true )
         			{	
         				context.strokeRect(x, y, event.getRelativeX(myCanvas.getCanvasElement())-x, event.getRelativeY(myCanvas.getCanvasElement())-y);      			      				
-        	        	context.setFillStyle("#848484");
+        	        	context.setFillStyle(color);
     					context.fillRect(x, y, event.getRelativeX(myCanvas.getCanvasElement())-x, event.getRelativeY(myCanvas.getCanvasElement())-y);
         			}   			
         	
@@ -181,7 +179,30 @@ public class Main implements EntryPoint {
     			rootPanel.remove(myCanvas);
     			drawFrame(zoom);
     			drawCanvas();
+    			
+    			for(int j=0;j<rectXY.size();j++)
+				{
+					Region r = (Region)rectXY.get(j);
+					//r.setX((int)(r.getX()+14));
+					//r.setY((int)(r.getY()-14));
+					//r.setWidth((int)(r.getWidth()/1.1));
+					//r.setHeight((int)(r.getHeight()/1.1));
+					rectXY.set(j, r);
+				}
+    			context.clearRect(0, 0, frameWidth, frameHeight);
+
+    			for(int j=0;j<rectXY.size();j++)
+				{
+					Region r;
+					r = (Region) rectXY.get(j);
+					context.strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+					context.setFillStyle(r.color);
+					context.fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+					context.setGlobalAlpha(0.7);
+				}
     			}
+    			
+    			
     		}
     	});
     	
@@ -194,6 +215,28 @@ public class Main implements EntryPoint {
     			rootPanel.remove(frame);
     			drawFrame(zoom);
     			drawCanvas();
+    			for(int j=0;j<rectXY.size();j++)
+				{
+					Region r = (Region)rectXY.get(j);
+					//r.setX((int)(r.getX()-14));
+					//r.setY((int)(r.getY()+14));
+					//r.setWidth((int)(r.getWidth()*1.1));
+					//r.setHeight((int)(r.getHeight()*1.1));
+					rectXY.set(j, r);
+				}
+    			
+    			context.clearRect(0, 0, frameWidth, frameHeight);
+
+    			for(int j=0;j<rectXY.size();j++)
+				{
+					Region r;
+					r = (Region) rectXY.get(j);
+					context.strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+					context.setFillStyle(r.color);
+					context.fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+					context.setGlobalAlpha(0.7);
+				}
+    			
     			}
     		}
     	});
@@ -227,10 +270,9 @@ public class Main implements EntryPoint {
     	btnColor.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
     			
-				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
-    			context.setFillStyle("#FEFDFD");
-    			rectCOL[0] ="#FEFDFD";
-    			context.fillRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);*/
+    			//context.setFillStyle("#FEFDFD");
+    			color ="#FEFDFD";
+    			styleName = "White3";
   
     		}
     	});
@@ -242,11 +284,9 @@ public class Main implements EntryPoint {
     	Button button = new Button("");
     	button.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			rootPanel.getBodyElement().getStyle().setProperty("cursor","url(cursorgrey.ico),auto");
-				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
-    			context.setFillStyle("#EAEAEA");
-    			rectCOL[0] ="#EAEAEA";
-    			context.fillRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);*/
+    			//rootPanel.getBodyElement().getStyle().setProperty("cursor","url(cursorgrey.ico),auto");
+    			color ="#EAEAEA";
+    			styleName = "White2";
     		}
     	});
     	button.setStyleName("gwt-ColorWhite2");
@@ -257,10 +297,8 @@ public class Main implements EntryPoint {
     	Button button_3 = new Button("");
     	button_3.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
-    			context.setFillStyle("#CBCACA");
-    			rectCOL[0] ="#CBCACA";
-    			context.fillRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);*/
+    			color ="#CBCACA";
+    			styleName = "White1";
     		}
     	});
     	button_3.setStyleName("gwt-ColorWhite3");
@@ -271,10 +309,8 @@ public class Main implements EntryPoint {
     	Button button_1 = new Button("");
     	button_1.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
-    			context.setFillStyle("#848484");
-    			rectCOL[0] ="#848484";
-    			context.fillRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);*/
+    			color ="#848484";
+    			styleName = "Black1";
     		}
     	});
     	button_1.setStyleName("gwt-ColorBlack1");
@@ -285,10 +321,8 @@ public class Main implements EntryPoint {
     	Button button_2 = new Button("");
     	button_2.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
-    			context.setFillStyle("#494949");
-    			rectCOL[0] ="#494949";
-    			context.fillRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);*/
+    			color ="#494949";
+    			styleName = "Black2";
     		}
     	});
     	button_2.setStyleName("gwt-ColorBlack2");
@@ -299,11 +333,8 @@ public class Main implements EntryPoint {
     	Button button_4 = new Button("");
     	button_4.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-				/*context.clearRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);
-    			context.setFillStyle("#000000");
-    			rectCOL[0] ="#000000";
-    			context.fillRect(rectXY[0][0], rectXY[0][1], rectXY[0][2], rectXY[0][3]);*/
-
+    			color ="#000000";
+    			styleName = "Black3";
     		}
     	});
     	button_4.setStyleName("gwt-ColorBlack3");
@@ -376,7 +407,7 @@ public class Main implements EntryPoint {
     				i=0;
     			}
     			
-    			newone = new Region(x,y,e.getRelativeX(myCanvas.getCanvasElement())-x,e.getRelativeY(myCanvas.getCanvasElement())-y);
+    			newone = new Region(x,y,e.getRelativeX(myCanvas.getCanvasElement())-x,e.getRelativeY(myCanvas.getCanvasElement())-y,color);
     			rectXY.add(newone);
     			
     			/*rectXY[i][0] = rectXY[0][0];
@@ -390,7 +421,7 @@ public class Main implements EntryPoint {
     			i++;
      			
     			final VerticalPanel verticalPanel2 = new VerticalPanel();
-    			verticalPanel2.setStyleName("object");
+    			verticalPanel2.setStyleName("object"+styleName);
     	    	verticalPanel.add(verticalPanel2);
     	    	
     	    	final HorizontalPanel horizontalPanel = new HorizontalPanel();
@@ -427,7 +458,6 @@ public class Main implements EntryPoint {
     	    			context.clearRect(rdel.getX()-1, rdel.getY()-1, rdel.getWidth()+2, rdel.getHeight()+2);
     	    			i=delete.getTabIndex();
     	    			rectXY.remove(delete.getTabIndex()-1);
-    	    			rectCOL[i] = rectCOL[0];
     	    			i = rectXY.size();
     	    			//Problem here: try to delete a rectangle in app and add other rectangles after this one; it erases other coordinates
     	    		}
