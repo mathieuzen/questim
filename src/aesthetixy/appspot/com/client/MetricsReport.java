@@ -1,4 +1,4 @@
-package aesthetixy.appspot.com.server;
+package aesthetixy.appspot.com.client;
 
 import java.util.ArrayList;
 
@@ -69,10 +69,10 @@ public class MetricsReport {
 				
 				concentricity = Concentricity.calculate(rectXY,frameWidth,frameHeight);
 				String msgConcentricity;
-				if(concentricity>0.8){
+				if(concentricity>0.7){
 					msgConcentricity = "Bad !";
 				}
-				else if(concentricity>0.5){
+				else if(concentricity>0.4){
 					msgConcentricity = "Ok...";
 				}
 				else{
