@@ -24,6 +24,25 @@
       <param-value/>
     </init-param>
   </servlet>
+  
+	<servlet>
+
+<servlet-name>service</servlet-name>
+
+<servlet-class>aesthetixy.appspot.com.server.MyMetricsReportImpl
+
+</servlet-class>
+
+</servlet>
+
+
+<servlet-mapping>
+
+<servlet-name>service</servlet-name>
+
+<url-pattern>/aesthetixyg2/MetricsService</url-pattern>
+
+</servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>SystemServiceServlet</servlet-name>

@@ -29,6 +29,8 @@
   <!-- Change this line with your project's entry-point -->
   <entry-point class="aesthetixy.appspot.com.client.Main"/>
   
+  <servlet path ='/MetricsService' class='aesthetixy.appspot.com.server.MyMetricsReportImpl'/>
+  
 
 
 </module>

@@ -2,9 +2,11 @@ package aesthetixy.appspot.com.client;
 
 import java.util.ArrayList;
 
+
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -16,6 +18,8 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
 import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.*;
 
 //change
@@ -61,6 +65,16 @@ public class Main implements EntryPoint {
 	ArrayList rectXY = new ArrayList();
 	String color = "#848484";
 	String styleName ="";
+	
+	private MyMetricsReportAsync service;
+	
+	private MyMetricsReportAsync getService(){
+		if(service == null){
+			service = (MyMetricsReportAsync) GWT.create(MyMetricsReport.class);
+			((ServiceDefTarget)service).setServiceEntryPoint(GWT.getModuleBaseURL()+"MetricsService");
+		}
+		return service;
+	}
 	
 	public void onModuleLoad() {
 
@@ -251,8 +265,23 @@ public class Main implements EntryPoint {
     	PushButton btnMetricReport = new PushButton(metricReport);
     	btnMetricReport.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			new MetricsReport(rectXY, frameWidth, frameHeight);
-       		}
+    			//new MetricsReport(rectXY, frameWidth, frameHeight);
+    			getService().myMethod(new AsyncCallback<String>() {
+					
+					@Override
+					public void onSuccess(String result) {
+						Window.alert(result);
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+    		
+    		
+    		}
     	});
     	btnMetricReport.setSize("40px", "45px");
     	absolutePanel.add(btnMetricReport, 40, 230);
