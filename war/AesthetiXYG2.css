@@ -1,4 +1,13 @@
 
+.metricsValue {
+    margin-top: 10px;
+    float: right;
+    text-align: right;
+}
+.metricsLabel {
+    margin: 10px;
+    width: 90px;
+}
 .sendButton {
     display: block;
     font-size: 16pt;

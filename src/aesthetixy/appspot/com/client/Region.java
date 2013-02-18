@@ -1,6 +1,9 @@
 package aesthetixy.appspot.com.client;
 
-public class Region {
+import java.io.Serializable;
+
+
+public class Region implements Serializable{
 
 	String id, name;
 	private int x1 = 0, y1 = 0, width = 0, height = 0;
@@ -11,6 +14,11 @@ public class Region {
 		r.name = name;
 		return r;
 	}
+	
+	public Region (){
+		
+	}
+	
 	
 	public Region (int x, int y, int width, int height, String color){
 		this.x1 = x;

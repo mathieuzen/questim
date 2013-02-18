@@ -2,9 +2,11 @@ package aesthetixy.appspot.com.server;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.Window;
 
 import aesthetixy.appspot.com.client.Region;
+
+import com.google.gwt.user.client.Window;
+
 
 public class Concentricity extends Metric {
 	

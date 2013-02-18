@@ -1,7 +1,7 @@
 package aesthetixy.appspot.com.client;
 
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -17,60 +17,70 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
-import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 //change
 public class Main implements EntryPoint {
 	
-	/*
-	 *Some variables declarations 
-	 */
+	double balance = 0;
+	double calignment = 0;
+	double ealignment = 0;
+	double density = 0;
+	double concentricity = 0;
+	
+	Label balanceVlue = new Label(String.valueOf(balance));
+	Label calignmentVlue = new Label(String.valueOf(calignment));
+	Label ealignmentVlue = new Label(String.valueOf(ealignment));
+	Label densityVlue = new Label(String.valueOf(density));
+	Label concentricityVlue = new Label(String.valueOf(concentricity));
 	
 	Boolean browse = false;
-	
+	Boolean objects = false;
 	//Boolean to know if mouse left click is down
 	Boolean mouseDown = false;
-	
 	//URL of the void picture to draw when no screenshot loaded
 	static String url = Window.Location.getParameter("url");
-	
 	Frame frame = new Frame(url);
-	
-	
 	//Labels that displays mouse position on the canvas
 	Label lblx = new Label("000");
 	Label lbly = new Label("000");
-	
 	//frame size
 	static int frameWidth = (int) (Window.getClientWidth()/1.5);
 	static int frameHeight = (int) (Window.getClientHeight()/1.5);
-	
 	int x = 0;
 	int y = 0;
 	int width;
 	int height;
-
 	final Canvas myCanvas = Canvas.createIfSupported();
-	
 	static double zoom = 1.5;
-	
 	Region newone;
-	
 	Boolean clear = false;
-	
-	//2D array saving drawn rectangles position coordinates
-	ArrayList rectXY = new ArrayList();
+	//array saving drawn rectangles position coordinates
+	ArrayList<Region> rectXY = new ArrayList<Region>();
 	String color = "#848484";
 	String styleName ="";
 	
-	private MyMetricsReportAsync service;
+	private MetricsReportAsync service;
 	
-	private MyMetricsReportAsync getService(){
+	private MetricsReportAsync getService(){
 		if(service == null){
-			service = (MyMetricsReportAsync) GWT.create(MyMetricsReport.class);
+			service = (MetricsReportAsync) GWT.create(MetricsReport.class);
 			((ServiceDefTarget)service).setServiceEntryPoint(GWT.getModuleBaseURL()+"MetricsService");
 		}
 		return service;
@@ -82,9 +92,7 @@ public class Main implements EntryPoint {
 			Window.alert("This is no valid URL!");
 			Window.Location.replace("/questim.html");
 		}*/
-	
-		
-		
+			
 		//Clear the panel on module load (for refresh function)
 		RootPanel.get().clear();
 		Window.setMargin("0px");
@@ -115,7 +123,7 @@ public class Main implements EntryPoint {
         			for(int j=0;j<rectXY.size();j++)
     				{
     					Region r;
-    					r = (Region) rectXY.get(j);
+    					r = rectXY.get(j);
     					context.strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
     					context.setFillStyle(r.color);
     					context.fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
@@ -196,7 +204,7 @@ public class Main implements EntryPoint {
     			
     			for(int j=0;j<rectXY.size();j++)
 				{
-					Region r = (Region)rectXY.get(j);
+					Region r = rectXY.get(j);
 					//r.setX((int)(r.getX()+14));
 					//r.setY((int)(r.getY()-14));
 					//r.setWidth((int)(r.getWidth()/1.1));
@@ -208,7 +216,7 @@ public class Main implements EntryPoint {
     			for(int j=0;j<rectXY.size();j++)
 				{
 					Region r;
-					r = (Region) rectXY.get(j);
+					r = rectXY.get(j);
 					context.strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 					context.setFillStyle(r.color);
 					context.fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
@@ -231,7 +239,7 @@ public class Main implements EntryPoint {
     			drawCanvas();
     			for(int j=0;j<rectXY.size();j++)
 				{
-					Region r = (Region)rectXY.get(j);
+					Region r = rectXY.get(j);
 					//r.setX((int)(r.getX()-14));
 					//r.setY((int)(r.getY()+14));
 					//r.setWidth((int)(r.getWidth()*1.1));
@@ -244,7 +252,7 @@ public class Main implements EntryPoint {
     			for(int j=0;j<rectXY.size();j++)
 				{
 					Region r;
-					r = (Region) rectXY.get(j);
+					r = rectXY.get(j);
 					context.strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 					context.setFillStyle(r.color);
 					context.fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
@@ -266,21 +274,80 @@ public class Main implements EntryPoint {
     	btnMetricReport.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
     			//new MetricsReport(rectXY, frameWidth, frameHeight);
-    			getService().myMethod(new AsyncCallback<String>() {
+    			getService().getBalance(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
 					
 					@Override
-					public void onSuccess(String result) {
-						Window.alert(result);
+					public void onSuccess(Double result) {
+						balance = result;
+						balanceVlue.setText(String.valueOf(balance));
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
+						Window.alert("Not working... \n"+caught.toString());
+						caught.printStackTrace();
+					}
+				});
+    			
+    			getService().getDensity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+					
+					@Override
+					public void onSuccess(Double result) {
+						density = result;
+						densityVlue.setText(String.valueOf(density));
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Not working... \n"+caught.toString());
+						caught.printStackTrace();
+					}
+				});
+    			
+    			getService().getCAlignment(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+					
+					@Override
+					public void onSuccess(Double result) {
+						calignment = result;
+						calignmentVlue.setText(String.valueOf(calignment));
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Not working... \n"+caught.toString());
+						caught.printStackTrace();
 					}
 				});
     		
+    			getService().getEAlignment(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+					
+					@Override
+					public void onSuccess(Double result) {
+						ealignment = result;
+						ealignmentVlue.setText(String.valueOf(ealignment));
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Not working... \n"+caught.toString());
+						caught.printStackTrace();
+					}
+				});
     		
+    			getService().getConcentricity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+					
+					@Override
+					public void onSuccess(Double result) {
+						concentricity = result;
+						concentricityVlue.setText(String.valueOf(concentricity));
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Not working... \n"+caught.toString());
+						caught.printStackTrace();
+					}
+				});
     		}
     	});
     	btnMetricReport.setSize("40px", "45px");
@@ -369,23 +436,98 @@ public class Main implements EntryPoint {
     	button_4.setStyleName("gwt-ColorBlack3");
     	grid.setWidget(1, 2, button_4);
     	button_4.setSize("14px", "16px");
-    	    	
+    	
+    	//panel for "onglets"
+    	HorizontalPanel onglets = new HorizontalPanel();
+    	rootPanel.add(onglets, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 50);
+    	onglets.setStyleName("panellat");
+    	onglets.setSize("130px", "50px");
+    	
     	//add a right-side panel to write coordinates, width and height of each drawn rectangle
-    	ScrollPanel absolutePanel_1 = new ScrollPanel();
-    	rootPanel.add(absolutePanel_1, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 50);
+    	final ScrollPanel absolutePanel_1 = new ScrollPanel();
+    	rootPanel.add(absolutePanel_1, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 100);
     	absolutePanel_1.setStyleName("panellat");
-    	absolutePanel_1.setSize("130px", frameHeight+"px");
+    	absolutePanel_1.setSize("130px", frameHeight-50+"px");
+    	
+    	final ScrollPanel absolutePanel_2 = new ScrollPanel();
+    	rootPanel.add(absolutePanel_2, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 100);
+    	absolutePanel_2.setStyleName("panellat");
+    	absolutePanel_2.setSize("130px", frameHeight-50+"px");
+    	absolutePanel_2.setVisible(false);
     	
     	//add a VerticalPanel in this right-side panel 
     	final VerticalPanel verticalPanel = new VerticalPanel();
     	absolutePanel_1.add(verticalPanel);
     	verticalPanel.setSize("130px", "20px");
     	
-    	//add title "Saved datas" to the right-side panel
-    	final Label lblNewLabel = new Label("Objects");
-    	lblNewLabel.setDirectionEstimator(false);
-    	verticalPanel.add(lblNewLabel);
-    	verticalPanel.setCellHorizontalAlignment(lblNewLabel, HasHorizontalAlignment.ALIGN_CENTER);
+    	final VerticalPanel metricsPanel = new VerticalPanel();
+    	absolutePanel_2.add(metricsPanel);
+    	metricsPanel.setSize("130px", "20px");
+    	metricsPanel.setVisible(false);
+    	    	
+    	HorizontalPanel Balance = new HorizontalPanel();
+    	Label balanceLbl = new Label("Balance");
+    	balanceLbl.setStyleName("metricsLabel");
+    	balanceVlue.setStyleName("metricsValue");
+    	Balance.add(balanceLbl);
+    	Balance.add(balanceVlue);
+    	metricsPanel.add(Balance);
+    	
+    	HorizontalPanel CAlignment = new HorizontalPanel();
+    	Label calignmentLbl = new Label("CAlignment");
+    	calignmentLbl.setStyleName("metricsLabel");
+    	calignmentVlue.setStyleName("metricsValue");
+    	CAlignment.add(calignmentLbl);
+    	CAlignment.add(calignmentVlue);
+    	metricsPanel.add(CAlignment);
+    	
+    	HorizontalPanel EAlignment = new HorizontalPanel();
+    	Label ealignmentLbl = new Label("EAlignment");
+    	ealignmentLbl.setStyleName("metricsLabel");
+    	ealignmentVlue.setStyleName("metricsValue");
+    	EAlignment.add(ealignmentLbl);
+    	EAlignment.add(ealignmentVlue);
+    	metricsPanel.add(EAlignment);
+    	
+    	HorizontalPanel Density = new HorizontalPanel();
+    	Label densityLbl = new Label("Density");
+    	densityLbl.setStyleName("metricsLabel");
+    	densityVlue.setStyleName("metricsValue");
+    	Density.add(densityLbl);
+    	Density.add(densityVlue);
+    	metricsPanel.add(Density);
+    	
+    	HorizontalPanel Concentricity = new HorizontalPanel();
+    	Label concentricityLbl = new Label("Concentricity");
+    	concentricityLbl.setStyleName("metricsLabel");
+    	concentricityVlue.setStyleName("metricsValue");
+    	Concentricity.add(concentricityLbl);
+    	Concentricity.add(concentricityVlue);
+    	metricsPanel.add(Concentricity);
+    	
+    	//add onglet "Objects" to the "onglets" panel
+    	Button objects = new Button("Objects");
+    	objects.setSize("65px", "50px");
+    	objects.addClickHandler(new ClickHandler(){
+    		public void onClick(ClickEvent event){
+    				verticalPanel.setVisible(true);
+    				absolutePanel_1.setVisible(true);
+    				metricsPanel.setVisible(false);
+    				absolutePanel_2.setVisible(false);
+    		}
+    	});
+    	Button metrics = new Button("Metrics");
+    	metrics.setSize("65px", "50px");
+    	metrics.addClickHandler(new ClickHandler(){
+    		public void onClick(ClickEvent event){
+    				verticalPanel.setVisible(false);
+    				absolutePanel_1.setVisible(false);
+    				metricsPanel.setVisible(true);
+    				absolutePanel_2.setVisible(true);
+    		}
+    	});
+    	onglets.add(objects);
+    	onglets.add(metrics);
     	
     	//add a button to clear panel in "toolpanel"
     	Button btnNewButton = new Button("Clear Panel");
@@ -396,8 +538,7 @@ public class Main implements EntryPoint {
 				{
 					rectXY.clear();
 					verticalPanel.clear();
-					verticalPanel.add(lblNewLabel);
-					verticalPanel.setCellHorizontalAlignment(lblNewLabel, HasHorizontalAlignment.ALIGN_CENTER);
+
 					clear = true;
 					
 				}
@@ -406,7 +547,6 @@ public class Main implements EntryPoint {
     	btnNewButton.setSize("60px", "70px");
     	absolutePanel.add(btnNewButton, absolutePanel.getOffsetWidth()/2-60/2, 305);
     	
-    
     	final Button btnBrowse = new Button ("Browse");
     	btnBrowse.addClickHandler(new ClickHandler(){
     		public void onClick(ClickEvent event){
@@ -444,7 +584,7 @@ public class Main implements EntryPoint {
     			rectXY[i][2] = rectXY[0][2];
     			rectXY[i][3] = rectXY[0][3];*/
     			Region r;
-    			r = (Region) rectXY.get(i);
+    			r = rectXY.get(i);
     			//rectCOL[i] = rectCOL[0];
     			
     			i++;
@@ -483,7 +623,7 @@ public class Main implements EntryPoint {
     	    		public void onClick(ClickEvent event) {
     	    			Widget t = (delete.getParent()).getParent();
     	    			t.removeFromParent();
-    	    			Region rdel = (Region) rectXY.get(delete.getTabIndex()-1);
+    	    			Region rdel = rectXY.get(delete.getTabIndex()-1);
     	    			context.clearRect(rdel.getX()-1, rdel.getY()-1, rdel.getWidth()+2, rdel.getHeight()+2);
     	    			i=delete.getTabIndex();
     	    			rectXY.remove(delete.getTabIndex()-1);
