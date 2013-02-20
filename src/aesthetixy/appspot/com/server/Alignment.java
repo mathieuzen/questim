@@ -11,7 +11,7 @@ import com.google.gwt.user.client.Window;
 
 public class Alignment extends Metric {
 	
-	static int treshold = 5;
+	static int treshold = 2;
 	static int n;
 	static int verticalAlignment1;
 	static int horizontalAlignment1;

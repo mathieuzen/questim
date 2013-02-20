@@ -17,6 +17,7 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -44,11 +45,19 @@ public class Main implements EntryPoint {
 	double density = 0;
 	double concentricity = 0;
 	
+	NumberFormat fmt = NumberFormat.getFormat("##0");
+	
 	Label balanceVlue = new Label(String.valueOf(balance));
 	Label calignmentVlue = new Label(String.valueOf(calignment));
 	Label ealignmentVlue = new Label(String.valueOf(ealignment));
 	Label densityVlue = new Label(String.valueOf(density));
 	Label concentricityVlue = new Label(String.valueOf(concentricity));
+	
+	Label balanceLbl = new Label("Balance");
+	Label calignmentLbl = new Label("CAlignment");
+	Label ealignmentLbl = new Label("EAlignment");
+	Label densityLbl = new Label("Density");
+	Label concentricityLbl = new Label("Concentricity");
 	
 	Boolean browse = false;
 	Boolean objects = false;
@@ -274,80 +283,7 @@ public class Main implements EntryPoint {
     	btnMetricReport.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
     			//new MetricsReport(rectXY, frameWidth, frameHeight);
-    			getService().getBalance(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
-					
-					@Override
-					public void onSuccess(Double result) {
-						balance = result;
-						balanceVlue.setText(String.valueOf(balance));
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Not working... \n"+caught.toString());
-						caught.printStackTrace();
-					}
-				});
-    			
-    			getService().getDensity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
-					
-					@Override
-					public void onSuccess(Double result) {
-						density = result;
-						densityVlue.setText(String.valueOf(density));
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Not working... \n"+caught.toString());
-						caught.printStackTrace();
-					}
-				});
-    			
-    			getService().getCAlignment(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
-					
-					@Override
-					public void onSuccess(Double result) {
-						calignment = result;
-						calignmentVlue.setText(String.valueOf(calignment));
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Not working... \n"+caught.toString());
-						caught.printStackTrace();
-					}
-				});
-    		
-    			getService().getEAlignment(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
-					
-					@Override
-					public void onSuccess(Double result) {
-						ealignment = result;
-						ealignmentVlue.setText(String.valueOf(ealignment));
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Not working... \n"+caught.toString());
-						caught.printStackTrace();
-					}
-				});
-    		
-    			getService().getConcentricity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
-					
-					@Override
-					public void onSuccess(Double result) {
-						concentricity = result;
-						concentricityVlue.setText(String.valueOf(concentricity));
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Not working... \n"+caught.toString());
-						caught.printStackTrace();
-					}
-				});
+    			getMetricsReport();
     		}
     	});
     	btnMetricReport.setSize("40px", "45px");
@@ -440,8 +376,7 @@ public class Main implements EntryPoint {
     	//panel for "onglets"
     	HorizontalPanel onglets = new HorizontalPanel();
     	rootPanel.add(onglets, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 50);
-    	onglets.setStyleName("panellat");
-    	onglets.setSize("130px", "50px");
+    	onglets.setSize("134px", "52px");
     	
     	//add a right-side panel to write coordinates, width and height of each drawn rectangle
     	final ScrollPanel absolutePanel_1 = new ScrollPanel();
@@ -464,66 +399,69 @@ public class Main implements EntryPoint {
     	absolutePanel_2.add(metricsPanel);
     	metricsPanel.setSize("130px", "20px");
     	metricsPanel.setVisible(false);
-    	    	
+    	
+
     	HorizontalPanel Balance = new HorizontalPanel();
-    	Label balanceLbl = new Label("Balance");
-    	balanceLbl.setStyleName("metricsLabel");
-    	balanceVlue.setStyleName("metricsValue");
+    	balanceLbl.setStyleName("metricsLabelNeutral");
+    	balanceVlue.setStyleName("metricsValueNeutral");
     	Balance.add(balanceLbl);
     	Balance.add(balanceVlue);
     	metricsPanel.add(Balance);
     	
     	HorizontalPanel CAlignment = new HorizontalPanel();
-    	Label calignmentLbl = new Label("CAlignment");
-    	calignmentLbl.setStyleName("metricsLabel");
-    	calignmentVlue.setStyleName("metricsValue");
+    	calignmentLbl.setStyleName("metricsLabelNeutral");
+    	calignmentVlue.setStyleName("metricsValueNeutral");
     	CAlignment.add(calignmentLbl);
     	CAlignment.add(calignmentVlue);
     	metricsPanel.add(CAlignment);
-    	
+
     	HorizontalPanel EAlignment = new HorizontalPanel();
-    	Label ealignmentLbl = new Label("EAlignment");
-    	ealignmentLbl.setStyleName("metricsLabel");
-    	ealignmentVlue.setStyleName("metricsValue");
+    	ealignmentLbl.setStyleName("metricsLabelNeutral");
+    	ealignmentVlue.setStyleName("metricsValueNeutral");
     	EAlignment.add(ealignmentLbl);
     	EAlignment.add(ealignmentVlue);
     	metricsPanel.add(EAlignment);
     	
     	HorizontalPanel Density = new HorizontalPanel();
-    	Label densityLbl = new Label("Density");
-    	densityLbl.setStyleName("metricsLabel");
-    	densityVlue.setStyleName("metricsValue");
+    	densityLbl.setStyleName("metricsLabelNeutral");
+    	densityVlue.setStyleName("metricsValueNeutral");
     	Density.add(densityLbl);
     	Density.add(densityVlue);
     	metricsPanel.add(Density);
     	
     	HorizontalPanel Concentricity = new HorizontalPanel();
-    	Label concentricityLbl = new Label("Concentricity");
-    	concentricityLbl.setStyleName("metricsLabel");
-    	concentricityVlue.setStyleName("metricsValue");
+    	concentricityLbl.setStyleName("metricsLabelNeutral");
+    	concentricityVlue.setStyleName("metricsValueNeutral");
     	Concentricity.add(concentricityLbl);
     	Concentricity.add(concentricityVlue);
     	metricsPanel.add(Concentricity);
     	
     	//add onglet "Objects" to the "onglets" panel
-    	Button objects = new Button("Objects");
+    	final Button objects = new Button("Objects");
     	objects.setSize("65px", "50px");
+    	objects.setStyleName("activeTab");
+    	final Button metrics = new Button("Metrics");
+    	metrics.setSize("65px", "50px");
+    	metrics.setStyleName("passiveTab");
+    	
     	objects.addClickHandler(new ClickHandler(){
     		public void onClick(ClickEvent event){
     				verticalPanel.setVisible(true);
     				absolutePanel_1.setVisible(true);
     				metricsPanel.setVisible(false);
     				absolutePanel_2.setVisible(false);
+    				objects.setStyleName("activeTab");
+    				metrics.setStyleName("passiveTab");
     		}
     	});
-    	Button metrics = new Button("Metrics");
-    	metrics.setSize("65px", "50px");
     	metrics.addClickHandler(new ClickHandler(){
     		public void onClick(ClickEvent event){
     				verticalPanel.setVisible(false);
     				absolutePanel_1.setVisible(false);
     				metricsPanel.setVisible(true);
     				absolutePanel_2.setVisible(true);
+    				metrics.setStyleName("activeTab");
+    				objects.setStyleName("passiveTab");
     		}
     	});
     	onglets.add(objects);
@@ -542,6 +480,11 @@ public class Main implements EntryPoint {
 					clear = true;
 					
 				}
+				balanceVlue.setText("0");
+				densityVlue.setText("0");
+				calignmentVlue.setText("0");
+				ealignmentVlue.setText("0");
+				concentricityVlue.setText("0");
     		}
     	});
     	btnNewButton.setSize("60px", "70px");
@@ -631,6 +574,8 @@ public class Main implements EntryPoint {
     	    			//Problem here: try to delete a rectangle in app and add other rectangles after this one; it erases other coordinates
     	    		}
     	    	});
+    	    	
+    	    	getMetricsReport();
     				}
     	});
     	   	    	
@@ -667,5 +612,151 @@ public class Main implements EntryPoint {
 	//RootPanel.get().add(myCanvas, 50, 135);
  	myCanvas.setSize(frameWidth+"px", frameHeight+"px");
  	RootPanel.get().add(myCanvas, Window.getClientWidth()/2-frameWidth/2, 50);
+ 	}
+ 	
+ 	public void getMetricsReport(){
+ 		getService().getBalance(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+			
+			@Override
+			public void onSuccess(Double result) {
+				balance = result;
+				balanceVlue.setText(String.valueOf(fmt.format(balance*100)));
+		    	if(balance <0.7){
+		        	balanceLbl.setStyleName("metricsLabelRed");
+		        	balanceVlue.setStyleName("metricsValueRed");
+		        	}
+		        	else if(balance <0.85){
+		        	balanceLbl.setStyleName("metricsLabelOrange");
+		        	balanceVlue.setStyleName("metricsValueOrange");
+		        	}
+		        	else
+		        	{
+		            balanceLbl.setStyleName("metricsLabelGreen");
+		            balanceVlue.setStyleName("metricsValueGreen");	
+		        	}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Not working... \n"+caught.toString());
+				caught.printStackTrace();
+			}
+		});
+		
+		getService().getDensity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+			
+			@Override
+			public void onSuccess(Double result) {
+				if(result>0.99){
+					result = 0.99;
+				}
+				density = result;
+				densityVlue.setText(String.valueOf(fmt.format(density*100)));
+		    	if(density <0.3 || density >0.7){
+		        	densityLbl.setStyleName("metricsLabelRed");
+		        	densityVlue.setStyleName("metricsValueRed");
+		        	}
+		        	else if(density <0.4 || density >0.6){
+		        	densityLbl.setStyleName("metricsLabelOrange");
+		        	densityVlue.setStyleName("metricsValueOrange");
+		        	}
+		        	else
+		        	{
+		            densityLbl.setStyleName("metricsLabelGreen");
+		            densityVlue.setStyleName("metricsValueGreen");	
+		        	}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Not working... \n"+caught.toString());
+				caught.printStackTrace();
+			}
+		});
+		
+		getService().getCAlignment(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+			
+			@Override
+			public void onSuccess(Double result) {
+				calignment = result;
+				calignmentVlue.setText(String.valueOf(fmt.format(calignment*100)));
+		    	if(calignment<0.3){
+		        	calignmentLbl.setStyleName("metricsLabelRed");
+		        	calignmentVlue.setStyleName("metricsValueRed");
+		        	}
+		        	else if(calignment <0.5){
+		        	calignmentLbl.setStyleName("metricsLabelOrange");
+		        	calignmentVlue.setStyleName("metricsValueOrange");
+		        	}
+		        	else
+		        	{
+		            calignmentLbl.setStyleName("metricsLabelGreen");
+		            calignmentVlue.setStyleName("metricsValueGreen");	
+		        	}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Not working... \n"+caught.toString());
+				caught.printStackTrace();
+			}
+		});
+	
+		getService().getEAlignment(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+			
+			@Override
+			public void onSuccess(Double result) {
+				ealignment = result;
+				ealignmentVlue.setText(String.valueOf(fmt.format(ealignment*100)));
+
+		    	if(ealignment <0.3){
+		    	ealignmentLbl.setStyleName("metricsLabelRed");
+		    	ealignmentVlue.setStyleName("metricsValueRed");
+		    	}
+		    	else if(ealignment <0.5){
+		    	ealignmentLbl.setStyleName("metricsLabelOrange");
+		    	ealignmentVlue.setStyleName("metricsValueOrange");
+		    	}
+		    	else
+		    	{
+		        ealignmentLbl.setStyleName("metricsLabelGreen");
+		        ealignmentVlue.setStyleName("metricsValueGreen");	
+		    	}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Not working... \n"+caught.toString());
+				caught.printStackTrace();
+			}
+		});
+	
+		getService().getConcentricity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+			
+			@Override
+			public void onSuccess(Double result) {
+				concentricity = result;
+				concentricityVlue.setText(String.valueOf(fmt.format(concentricity*100)));
+		    	if(concentricity >0.85){
+		        	concentricityLbl.setStyleName("metricsLabelRed");
+		        	concentricityVlue.setStyleName("metricsValueRed");
+		        	}
+		        	else if(concentricity >0.6){
+		        	concentricityLbl.setStyleName("metricsLabelOrange");
+		        	concentricityVlue.setStyleName("metricsValueOrange");
+		        	}
+		        	else
+		        	{
+		            concentricityLbl.setStyleName("metricsLabelGreen");
+		            concentricityVlue.setStyleName("metricsValueGreen");	
+		        	}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Not working... \n"+caught.toString());
+				caught.printStackTrace();
+			}
+		});
  	}
 }

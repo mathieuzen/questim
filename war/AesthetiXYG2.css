@@ -1,10 +1,43 @@
 
-.metricsValue {
-    margin-top: 10px;
+.metricsValueNeutral {
     float: right;
+    margin-top: 10px;
     text-align: right;
 }
-.metricsLabel {
+.metricsLabelNeutral {
+    margin: 10px;
+    width: 90px;
+}
+.metricsValueRed {
+    color: #B00505;
+    float: right;
+    margin-top: 10px;
+    text-align: right;
+}
+.metricsLabelRed {
+    color: #B00505;
+    margin: 10px;
+    width: 90px;
+}
+.metricsValueOrange {
+    color: #948F07;
+    float: right;
+    margin-top: 10px;
+    text-align: right;
+}
+.metricsLabelOrange {
+    color: #948F07;
+    margin: 10px;
+    width: 90px;
+}
+.metricsValueGreen {
+    color: #21AD09;
+    float: right;
+    margin-top: 10px;
+    text-align: right;
+}
+.metricsLabelGreen {
+    color: #21AD09;
     margin: 10px;
     width: 90px;
 }
@@ -76,65 +109,51 @@
 .gwt-Frame {
     transform: scale(0.6666);
     transform-origin: 0 0 0;
-    -ms-transform: scale(0.6666);
-    -ms-transform-origin: 0 0 0;
-    -moz-transform: scale(0.6666);
-    -moz-transform-origin: 0 0 0;
-    -webkit-transform: scale(0.6666);
-    -webkit-transform-origin: 0 0 0;
-    -o-transform: scale(0.6666);
-    -o-transform-origin: 0 0 0;
 }
 .panellat {
     border: 1px solid lightgrey;
+    border-top: 1px solid white;
 }
 .object {
     border: 0.5px solid black;
     margin-top: 10px;
 }
-
 .objectBlack3 {
-	color: white;
-	background-color: #000000;
+    background-color: #000000;
     border: 0.5px solid black;
+    color: white;
     margin-top: 10px;
 }
-
 .objectBlack2 {
-	color: white;
-	background-color: #494949;
+    background-color: #494949;
     border: 0.5px solid black;
+    color: white;
     margin-top: 10px;
 }
-
 .objectBlack1 {
-	color: white;
-	background-color: #848484;
+    background-color: #848484;
     border: 0.5px solid black;
+    color: white;
     margin-top: 10px;
 }
-
 .objectWhite1 {
-	color: black;
-	background-color: #CBCACA;
+    background-color: #CBCACA;
     border: 0.5px solid black;
+    color: black;
     margin-top: 10px;
 }
-
 .objectWhite2 {
-	color: black;
-	background-color: #EAEAEA;
+    background-color: #EAEAEA;
     border: 0.5px solid black;
+    color: black;
     margin-top: 10px;
 }
-
 .objectWhite3 {
-	color: black;
-	background-color: #FEFDFD;
+    background-color: #FEFDFD;
     border: 0.5px solid black;
+    color: black;
     margin-top: 10px;
 }
-
 .delete {
 }
 .LabelObject {
@@ -143,4 +162,12 @@
 }
 .Label {
     font-size: 10pt;
+}
+.activeTab {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-bottom: none;
+}
+.passiveTab {
+    border: 1px solid lightgray;
 }

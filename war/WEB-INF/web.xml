@@ -29,7 +29,7 @@
 
 <servlet-name>service</servlet-name>
 
-<servlet-class>aesthetixy.appspot.com.server.MyMetricsReportImpl
+<servlet-class>aesthetixy.appspot.com.server.MetricsReportImpl
 
 </servlet-class>
 
