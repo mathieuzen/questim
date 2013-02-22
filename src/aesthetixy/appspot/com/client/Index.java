@@ -72,6 +72,7 @@ public class Index implements EntryPoint{
         Label labelurl = new Label("Enter URL:");
         labelurl.setStyleName("labelurl");
         vPanel.add(labelurl);
+        textBox.setValue("http://");
         vPanel.add(textBox);
         Label labelor = new Label("or");
         labelor.setStyleName("labelor");

@@ -71,7 +71,7 @@ public class Main implements EntryPoint {
 	Label lbly = new Label("000");
 	//frame size
 	static int frameWidth = (int) (Window.getClientWidth()/1.5);
-	static int frameHeight = (int) (Window.getClientHeight()/1.5);
+	static int frameHeight = (int) (Window.getClientHeight()/1.2);
 	int x = 0;
 	int y = 0;
 	int width;
@@ -383,22 +383,24 @@ public class Main implements EntryPoint {
     	rootPanel.add(absolutePanel_1, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 100);
     	absolutePanel_1.setStyleName("panellat");
     	absolutePanel_1.setSize("130px", frameHeight-50+"px");
+    	absolutePanel_1.setVisible(false);
     	
     	final ScrollPanel absolutePanel_2 = new ScrollPanel();
     	rootPanel.add(absolutePanel_2, Window.getClientWidth()-50-absolutePanel.getOffsetWidth(), 100);
     	absolutePanel_2.setStyleName("panellat");
     	absolutePanel_2.setSize("130px", frameHeight-50+"px");
-    	absolutePanel_2.setVisible(false);
+
     	
     	//add a VerticalPanel in this right-side panel 
     	final VerticalPanel verticalPanel = new VerticalPanel();
     	absolutePanel_1.add(verticalPanel);
     	verticalPanel.setSize("130px", "20px");
+
     	
     	final VerticalPanel metricsPanel = new VerticalPanel();
     	absolutePanel_2.add(metricsPanel);
     	metricsPanel.setSize("130px", "20px");
-    	metricsPanel.setVisible(false);
+
     	
 
     	HorizontalPanel Balance = new HorizontalPanel();
@@ -439,10 +441,10 @@ public class Main implements EntryPoint {
     	//add onglet "Objects" to the "onglets" panel
     	final Button objects = new Button("Objects");
     	objects.setSize("65px", "50px");
-    	objects.setStyleName("activeTab");
+    	objects.setStyleName("passiveTab");
     	final Button metrics = new Button("Metrics");
     	metrics.setSize("65px", "50px");
-    	metrics.setStyleName("passiveTab");
+    	metrics.setStyleName("activeTab");
     	
     	objects.addClickHandler(new ClickHandler(){
     		public void onClick(ClickEvent event){
@@ -605,6 +607,7 @@ public class Main implements EntryPoint {
 		frame.getElement().getStyle().setProperty("-moz-transform", "scale("+1/zoom+")");
 		frame.getElement().getStyle().setProperty("-ms-transform", "scale("+1/zoom+")");
 		frame.getElement().getStyle().setProperty("-webkit-transform", "scale("+1/zoom+")");
+		frame.getElement().getStyle().setProperty("-webkit-transform-origin", "0 0");
 		frame.getElement().getStyle().setProperty("-o-transform", "scale("+1/zoom+")");
 	}
  	public void drawCanvas(){
@@ -737,11 +740,11 @@ public class Main implements EntryPoint {
 			public void onSuccess(Double result) {
 				concentricity = result;
 				concentricityVlue.setText(String.valueOf(fmt.format(concentricity*100)));
-		    	if(concentricity >0.85){
+		    	if(concentricity >0.7){
 		        	concentricityLbl.setStyleName("metricsLabelRed");
 		        	concentricityVlue.setStyleName("metricsValueRed");
 		        	}
-		        	else if(concentricity >0.6){
+		        	else if(concentricity >0.4){
 		        	concentricityLbl.setStyleName("metricsLabelOrange");
 		        	concentricityVlue.setStyleName("metricsValueOrange");
 		        	}

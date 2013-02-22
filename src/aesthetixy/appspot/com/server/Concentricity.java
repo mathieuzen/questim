@@ -22,7 +22,7 @@ public class Concentricity extends Metric {
 		for(int i=0;i<rectXY.size();i++){
 			Region r = (Region)rectXY.get(i);
 			
-			dbar += Math.hypot((double)r.getX()-xc, (double)r.getY()-yc);
+			dbar += Math.hypot((double)(r.getX()+r.getWidth()/2)-xc, (double)(r.getY()+r.getHeight()/2)-yc);
 		}
 		
 		dbar/=rectXY.size();
