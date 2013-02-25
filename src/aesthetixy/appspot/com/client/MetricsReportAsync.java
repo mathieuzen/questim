@@ -11,5 +11,6 @@ public void getDensity(ArrayList<Region> rectXY, int frameWidth,int frameHeight,
 public void getCAlignment(ArrayList<Region> rectXY, int frameWidth,int frameHeight, AsyncCallback<Double> asyncCallback);
 public void getEAlignment(ArrayList<Region> rectXY, int frameWidth,int frameHeight, AsyncCallback<Double> asyncCallback);
 public void getConcentricity(ArrayList<Region> rectXY, int frameWidth,int frameHeight, AsyncCallback<Double> asyncCallback);
+public void getSimplicity(ArrayList<Region> rectXY, int frameWidth,int frameHeight, AsyncCallback<Double> asyncCallback);
 
 }

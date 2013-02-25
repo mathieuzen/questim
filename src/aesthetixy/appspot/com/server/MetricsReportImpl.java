@@ -17,6 +17,7 @@ public class MetricsReportImpl extends RemoteServiceServlet implements MetricsRe
 	double alignment = 0;
 	double centeralignment = 0;
 	double concentricity = 0;
+	double simplicity = 0;
 
 	public double getBalance(ArrayList rectXY, int frameWidth, int frameHeight){
 			
@@ -155,6 +156,23 @@ public double getConcentricity(ArrayList rectXY, int frameWidth, int frameHeight
 	con= concentricity;
 	}
 	return con;
+
+}
+
+public double getSimplicity(ArrayList rectXY, int frameWidth, int frameHeight){
+	
+	double sim = 0;
+
+	if(rectXY.isEmpty()){
+		Window.alert("You must draw at least 1 element in order to compute metrics.");
+	}
+	
+	else{
+		
+		simplicity = Simplicity.calculate(rectXY,frameWidth,frameHeight);
+	sim= simplicity;
+	}
+	return sim;
 
 }
 }

@@ -50,7 +50,7 @@ public class Index implements EntryPoint{
                 url = textBox.getText();
                 //change url variable in main class
                	Main.setUrl(url);
-                if(url.length()!=0){
+                if(url.length()!=0 && url != "http://"){
                 	imageLoaded = false;
                 	Window.Location.replace("/AesthetiXYG2.html?url="+url);
                 }

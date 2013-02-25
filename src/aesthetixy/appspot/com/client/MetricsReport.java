@@ -10,4 +10,5 @@ public interface MetricsReport extends RemoteService {
 	public double getCAlignment(ArrayList <Region> rectXY, int frameWidth, int frameHeight);
 	public double getEAlignment(ArrayList <Region> rectXY, int frameWidth, int frameHeight);
 	public double getConcentricity(ArrayList <Region> rectXY, int frameWidth, int frameHeight);
+	public double getSimplicity(ArrayList <Region> rectXY, int frameWidth, int frameHeight);
 }

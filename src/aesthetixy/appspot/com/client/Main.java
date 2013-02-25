@@ -44,6 +44,7 @@ public class Main implements EntryPoint {
 	double ealignment = 0;
 	double density = 0;
 	double concentricity = 0;
+	double simplicity = 0;
 	
 	NumberFormat fmt = NumberFormat.getFormat("##0");
 	
@@ -52,12 +53,14 @@ public class Main implements EntryPoint {
 	Label ealignmentVlue = new Label(String.valueOf(ealignment));
 	Label densityVlue = new Label(String.valueOf(density));
 	Label concentricityVlue = new Label(String.valueOf(concentricity));
+	Label simplicityVlue = new Label(String.valueOf(simplicity));
 	
 	Label balanceLbl = new Label("Balance");
 	Label calignmentLbl = new Label("CAlignment");
 	Label ealignmentLbl = new Label("EAlignment");
 	Label densityLbl = new Label("Density");
 	Label concentricityLbl = new Label("Concentricity");
+	Label simplicityLbl = new Label("Complexity");       //valeur inversée
 	
 	Boolean browse = false;
 	Boolean objects = false;
@@ -438,6 +441,13 @@ public class Main implements EntryPoint {
     	Concentricity.add(concentricityVlue);
     	metricsPanel.add(Concentricity);
     	
+    	HorizontalPanel Simplicity = new HorizontalPanel();
+    	simplicityLbl.setStyleName("metricsLabelNeutral");
+    	simplicityVlue.setStyleName("metricsValueNeutral");
+    	Simplicity.add(simplicityLbl);
+    	Simplicity.add(simplicityVlue);
+    	metricsPanel.add(Simplicity);
+    	
     	//add onglet "Objects" to the "onglets" panel
     	final Button objects = new Button("Objects");
     	objects.setSize("65px", "50px");
@@ -487,6 +497,7 @@ public class Main implements EntryPoint {
 				calignmentVlue.setText("0");
 				ealignmentVlue.setText("0");
 				concentricityVlue.setText("0");
+				simplicityVlue.setText("0");
     		}
     	});
     	btnNewButton.setSize("60px", "70px");
@@ -752,6 +763,34 @@ public class Main implements EntryPoint {
 		        	{
 		            concentricityLbl.setStyleName("metricsLabelGreen");
 		            concentricityVlue.setStyleName("metricsValueGreen");	
+		        	}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Not working... \n"+caught.toString());
+				caught.printStackTrace();
+			}
+		});
+		
+		getService().getSimplicity(rectXY,frameWidth, frameHeight, new AsyncCallback<Double>() {
+			
+			@Override
+			public void onSuccess(Double result) {
+				simplicity = result;
+				simplicityVlue.setText(String.valueOf(fmt.format(simplicity*100)));
+		    	if(simplicity >0.45){
+		        	simplicityLbl.setStyleName("metricsLabelRed");
+		        	simplicityVlue.setStyleName("metricsValueRed");
+		        	}
+		        	else if(simplicity >0.35){
+		        	simplicityLbl.setStyleName("metricsLabelOrange");
+		        	simplicityVlue.setStyleName("metricsValueOrange");
+		        	}
+		        	else
+		        	{
+		            simplicityLbl.setStyleName("metricsLabelGreen");
+		            simplicityVlue.setStyleName("metricsValueGreen");	
 		        	}
 			}
 			
