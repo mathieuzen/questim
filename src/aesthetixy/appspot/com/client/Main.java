@@ -1,5 +1,6 @@
 package aesthetixy.appspot.com.client;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,8 +25,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -104,6 +108,31 @@ public class Main implements EntryPoint {
 			Window.alert("This is no valid URL!");
 			Window.Location.replace("/questim.html");
 		}*/
+		
+		ClickHandler labelClick = new ClickHandler(){
+			public void onClick(ClickEvent event){
+				MetricsDescription description = new MetricsDescription();
+				String title = null;
+				String text = null;
+				String img = null;
+				if(event.getSource().equals(balanceLbl))
+				{
+					title = "Balance";
+					text = description.getText("balance");
+					img = description.getImage("balance");
+				}
+				
+				alertDescription(title,text,img).center();
+			}
+		};
+		
+		balanceLbl.addClickHandler(labelClick);
+		calignmentLbl.addClickHandler(labelClick);
+		ealignmentLbl.addClickHandler(labelClick);
+		densityLbl.addClickHandler(labelClick);
+		concentricityLbl.addClickHandler(labelClick);
+		simplicityLbl.addClickHandler(labelClick);
+		
 			
 		//Clear the panel on module load (for refresh function)
 		RootPanel.get().clear();
@@ -794,6 +823,7 @@ public class Main implements EntryPoint {
 		        	}
 			}
 			
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Not working... \n"+caught.toString());
@@ -801,4 +831,36 @@ public class Main implements EntryPoint {
 			}
 		});
  	}
+ 	
+ 	public static DialogBox alertDescription(final String header, final String content, final String url) {
+        final DialogBox box = new DialogBox();
+        final VerticalPanel panel = new VerticalPanel();
+        box.setText(header);
+        Label lblDescription = new Label(content);
+        lblDescription.setStyleName("lblDescription");
+        panel.add(lblDescription);
+        panel.add(new Label(content));
+        final Button buttonClose = new Button("Close",new ClickHandler() {
+            @Override
+            public void onClick(final ClickEvent event) {
+                box.hide();
+            }
+        });
+        // few empty labels to make widget larger
+        final Label emptyLabel = new Label(" ");
+        Image img = new Image(url);
+        emptyLabel.setSize("auto","25px");
+        panel.add(emptyLabel);
+        img.setSize("300px","auto");
+        panel.add(img);
+        img.setStyleName("imgDescription");
+        panel.add(emptyLabel);
+        buttonClose.setWidth("90px");
+        panel.add(buttonClose);
+        panel.setCellHorizontalAlignment(buttonClose, HasAlignment.ALIGN_RIGHT);
+        box.add(panel);
+        
+        
+        return box;
+    }
 }
