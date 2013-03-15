@@ -1,0 +1,2 @@
+serviceClass: be.lilab.questim.client.MetricsReport
+path: 918B42F2AE0306745B22EF85F53BA1C0.gwt.rpc
